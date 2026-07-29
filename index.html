@@ -415,6 +415,8 @@ const SUPABASE_URL = 'https://lxnnhrrhrzlifgfzircv.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_FffNCJbytb3tb0VpkjQ81w_FO4zGw26';
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const RECORDINGS_BUCKET = 'recordings';
+const TEACHER_PIN = '1234';
+let teacherUnlocked = false;
 const COLORS = ['green','yellow','blue','pink','purple','orange','teal','coral','brown','slate'];
 
 const DEFAULT_LETTERS = [
@@ -534,7 +536,15 @@ function openLevelSelect(letterId){
   showView('levelView');
 }
 function openTeacher(){
-  loadLetters();
+  if(!teacherUnlocked){
+    const entered = prompt('PIN für den Lehrpersonen-Bereich:');
+    if(entered === null) return;              // Abbrechen gedrückt
+    if(entered.trim() !== TEACHER_PIN){
+      alert('Falscher PIN.');
+      return;
+    }
+    teacherUnlocked = true;                    // pro Sitzung nur einmal fragen
+  }
   if(letters.length && !getLetter(activeLetterId)) activeLetterId = letters[0].id;
   teacherLevel = 1;
   renderTeacher();
