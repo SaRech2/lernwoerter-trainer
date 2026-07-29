@@ -65,7 +65,7 @@
   }
   /* iPad Hochformat: 3 Quadrate pro Reihe – grösser, füllt die Höhe besser */
   @media (min-width:768px) and (orientation:portrait){
-    .letter-grid{
+    .page .letter-grid{
       grid-template-columns:repeat(3, 1fr);
       gap:20px;
       max-width:660px;
@@ -74,7 +74,7 @@
   }
   /* iPad Querformat: 4 Quadrate pro Reihe, nicht übermässig gross (kein Scrollen) */
   @media (min-width:768px) and (orientation:landscape){
-    .letter-grid{ max-width:760px; margin-left:auto; margin-right:auto; }
+    .page .letter-grid{ max-width:760px; margin-left:auto; margin-right:auto; }
   }
   /* ---- Seite: offwhite Karte ---- */
   .page{
