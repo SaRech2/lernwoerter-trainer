@@ -42,10 +42,11 @@
     -webkit-tap-highlight-color: transparent;
   }
   .app{
-    max-width:768px;
+    max-width:1400px;
     margin:0 auto;
     padding:40px 16px;
     min-height:100vh;
+    min-height:100dvh;          /* iPad-Safari: berücksichtigt die Adressleiste */
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -53,6 +54,14 @@
   /* Inhalt auf grösseren Bildschirmen ca. 20% grösser (Handy bleibt unverändert) */
   @media (min-width:640px){
     html{ font-size:19px; }
+  }
+  /* Tablet/iPad (Hoch- und Querformat): grüner Rahmen ca. 1 cm, weisse Karte füllt den Rest */
+  @media (min-width:768px){
+    .app{
+      padding:38px;             /* ~1 cm Rahmen rundherum */
+      justify-content:flex-start;
+    }
+    .page{ flex:1 1 auto; }     /* weisse Karte füllt die verfügbare Höhe */
   }
   /* ---- Seite: offwhite Karte ---- */
   .page{
