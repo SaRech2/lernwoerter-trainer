@@ -413,7 +413,7 @@ des Geräts - so sehen alle iPads dieselben Lernwörter und Aufnahmen.
 ------------------------------------ */
 const SUPABASE_URL = 'https://lxnnhrrhrzlifgfzircv.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_FffNCJbytb3tb0VpkjQ81w_FO4zGw26';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const RECORDINGS_BUCKET = 'recordings';
 const COLORS = ['green','yellow','blue','pink','purple','orange','teal','coral','brown','slate'];
 
@@ -474,7 +474,7 @@ let current = 0;
 async function loadLetters(){
   try{
     let stored = null;
-    const { data, error } = await supabase.from('app_state').select('data').eq('id', 1).single();
+    const { data, error } = await db.from('app_state').select('data').eq('id', 1).single();
     if(error) throw error;
     stored = data ? data.data : null;
 
@@ -511,7 +511,7 @@ async function loadLetters(){
   }catch(e){ letters = []; }
 }
 function saveLetters(){
-  supabase.from('app_state').upsert({ id: 1, data: letters, updated_at: new Date().toISOString() })
+  db.from('app_state').upsert({ id: 1, data: letters, updated_at: new Date().toISOString() })
     .then(({error}) => { if(error) console.error('Speichern fehlgeschlagen', error); });
 }
 function getLetter(id){ return letters.find(l => l.id === id); }
@@ -821,9 +821,9 @@ async function startRecording(target){
       const fileName = 'rec-' + Date.now() + '-' + Math.round(Math.random()*1e6) + '.' + ext;
       if(target === 'new'){ document.getElementById('recStatus').textContent = '⬆️ Wird hochgeladen …'; }
       try{
-        const { error: uploadError } = await supabase.storage.from(RECORDINGS_BUCKET).upload(fileName, blob, { contentType: actualType });
+        const { error: uploadError } = await db.storage.from(RECORDINGS_BUCKET).upload(fileName, blob, { contentType: actualType });
         if(uploadError) throw uploadError;
-        const { data: urlData } = supabase.storage.from(RECORDINGS_BUCKET).getPublicUrl(fileName);
+        const { data: urlData } = db.storage.from(RECORDINGS_BUCKET).getPublicUrl(fileName);
         handleRecordingFinished(target, urlData.publicUrl);
       }catch(err){
         recordingTarget = null;
