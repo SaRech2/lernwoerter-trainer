@@ -62,8 +62,18 @@
       justify-content:flex-start;
     }
     .page{ flex:1 1 auto; }     /* weisse Karte füllt die verfügbare Höhe */
-    /* Buchstaben-Quadrate nicht übermässig gross werden lassen,
-       damit sie im Querformat ohne Scrollen in die Höhe passen */
+  }
+  /* iPad Hochformat: 3 Quadrate pro Reihe – grösser, füllt die Höhe besser */
+  @media (min-width:768px) and (orientation:portrait){
+    .letter-grid{
+      grid-template-columns:repeat(3, 1fr);
+      gap:20px;
+      max-width:660px;
+      margin-left:auto; margin-right:auto;
+    }
+  }
+  /* iPad Querformat: 4 Quadrate pro Reihe, nicht übermässig gross (kein Scrollen) */
+  @media (min-width:768px) and (orientation:landscape){
     .letter-grid{ max-width:760px; margin-left:auto; margin-right:auto; }
   }
   /* ---- Seite: offwhite Karte ---- */
