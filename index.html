@@ -42,10 +42,17 @@
     -webkit-tap-highlight-color: transparent;
   }
   .app{
-    max-width:640px;
+    max-width:768px;
     margin:0 auto;
     padding:28px 16px 60px;
     min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  /* Inhalt auf grösseren Bildschirmen ca. 20% grösser (Handy bleibt unverändert) */
+  @media (min-width:640px){
+    html{ font-size:19px; }
   }
   /* ---- Seite: offwhite Karte ---- */
   .page{
